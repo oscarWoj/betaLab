@@ -15,28 +15,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-r7-p5H">
-                                <rect key="frame" x="106" y="100" width="200" height="100"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-r7-p5H">
+                                <rect key="frame" x="107" y="100" width="200" height="100"/>
+                                <state key="normal" image="us"/>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EeJ-wu-ZaH"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gu5-83-GWr">
-                                <rect key="frame" x="105.66928516719736" y="230" width="200" height="100.00000000000009"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gu5-83-GWr">
+                                <rect key="frame" x="107" y="231" width="200" height="100"/>
+                                <state key="normal" image="us"/>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PwP-yo-U95"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BxH-c7-0oH">
-                                <rect key="frame" x="105.66928516719736" y="360" width="200" height="99.999999999999929"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BxH-c7-0oH">
+                                <rect key="frame" x="107" y="360" width="200" height="100"/>
+                                <state key="normal" image="us"/>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CPu-cs-k2y"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="gu5-83-GWr" firstAttribute="top" secondItem="gQb-r7-p5H" secondAttribute="bottom" constant="31" id="4Sf-Na-WeS"/>
                             <constraint firstItem="gQb-r7-p5H" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="8RP-eY-Qhl"/>
+                            <constraint firstItem="gu5-83-GWr" firstAttribute="centerX" secondItem="gQb-r7-p5H" secondAttribute="centerX" id="PPN-d7-xrp"/>
+                            <constraint firstItem="BxH-c7-0oH" firstAttribute="centerX" secondItem="gu5-83-GWr" secondAttribute="centerX" id="ieY-PS-BUC"/>
+                            <constraint firstItem="BxH-c7-0oH" firstAttribute="top" secondItem="gu5-83-GWr" secondAttribute="bottom" constant="29" id="kF7-2N-1bX"/>
+                            <constraint firstItem="gQb-r7-p5H" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="rxP-Fd-rYr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="SEe-ob-yla"/>
+                    <connections>
+                        <outlet property="button1" destination="gQb-r7-p5H" id="rq3-0k-joL"/>
+                        <outlet property="button2" destination="gu5-83-GWr" id="kjK-t2-Ucg"/>
+                        <outlet property="button3" destination="BxH-c7-0oH" id="mki-Fp-JMd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,4 +78,7 @@
             <point key="canvasLocation" x="131.8840579710145" y="132.58928571428572"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="us" width="200" height="100"/>
+    </resources>
 </document>
