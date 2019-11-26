@@ -11,31 +11,28 @@ import UIKit
 class ViewController: UITableViewController {
     var allWords: [String] = []
     var usedWords: [String] = []
+    var currentWord:String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
-        
-        
-        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .redo, target: self, action: #selector(startGame))
+
         if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsUrl) {allWords = startWords.components(separatedBy: "\n")
-                
             }
         }
-        
         
         if allWords.isEmpty {
             allWords = ["silkworm"]
         }
-
         startGame()
-        
     }
     
-    func startGame() {
+    @objc func startGame() {
         title = allWords.randomElement()
+        currentWord = title!
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
     }
@@ -73,29 +70,48 @@ class ViewController: UITableViewController {
         if isPossible(word: lowerAnswer) {
             if isOriginal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
-                    usedWords.insert(answer, at: 0)
+                    if isLongEnough(word: lowerAnswer) {
+                        usedWords.insert(answer, at: 0)
                     
-                    let indexPath = IndexPath(row: 0, section: 0)
-                    tableView.insertRows(at: [indexPath], with: .automatic)
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        tableView.insertRows(at: [indexPath], with: .automatic)
                     
-                    return
-                } else {
-                    errorTitle = "Word not recognized"
-                    errorMessage = "You can't just make them up, you know"
+                        return
+                    }
                 }
-            } else {
-                errorTitle = "Word already used"
-                errorMessage = "Be more original!"
             }
-        } else {
-            guard let title = title else  { return }
-            errorTitle = "Word not possible"
-            errorMessage = "You can't spell that word from \(title.lowercased())."
         }
+        
+        errorTitle = showErrorMessage(word: lowerAnswer).0
+        errorMessage = showErrorMessage(word: lowerAnswer).1
         
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac,animated: true)
+    }
+    
+    func showErrorMessage(word: String)  -> (String,String) {
+        var errorTitle: String = ""
+        var errorMessage: String = ""
+        
+        if !isPossible(word: word) {
+            errorTitle = "Word not possible"
+            errorMessage = "You can't spell that word from \(title!.lowercased())."
+        }
+            
+            if isOriginal(word: word) {
+                errorTitle = "Word already used"
+                errorMessage = "Be more original!"
+            }
+                if isReal(word: word) {
+                    errorTitle = "Word not recognized"
+                    errorMessage = "You can't just make them up, you know"
+                }
+                    if isLongEnough(word: word) {
+                        errorTitle = "Word too short"
+                        errorMessage = "You need to guess more than 2 letters!"
+                    }
+        return (errorTitle,errorMessage)
     }
     
     func isPossible(word: String) -> Bool {
@@ -112,7 +128,7 @@ class ViewController: UITableViewController {
     }
     
     func isOriginal(word: String) -> Bool {
-        return !usedWords.contains(word)
+        return !usedWords.contains(word) && !(word == currentWord)
         
     }
     
@@ -121,6 +137,10 @@ class ViewController: UITableViewController {
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range:range, startingAt: 0, wrap: false, language: "en")
         return misspelledRange.location == NSNotFound
+    }
+
+    func isLongEnough(word: String) -> Bool {
+        return word.count > 2
     }
     
 
